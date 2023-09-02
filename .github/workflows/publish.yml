@@ -34,6 +34,6 @@ jobs:
         push: true
         context: .
         platforms: linux/amd64,linux/arm64
-        tags: yfsoftcom/alertmanager-wehbhook-handler:latest
+        tags: yfsoftcom/alertmanager-wehbhook-handler:latest,yfsoftcom/alertmanager-wehbhook-handler:${{ github.sha }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
