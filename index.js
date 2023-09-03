@@ -16,10 +16,12 @@ const postData = async (url, data) => {
 }
 const parseMessage = (target, originalMessage) => {
   if (target === 'wechat') {
+    const { status, commonAnnotations } = originalMessage;
+    const content = status === 'firing' ? `🔥🔥🔥\n${ commonAnnotations.description }` : `😁😁😁 ${commonAnnotations.summary} Resolved!`
     return {
       msgtype: 'text',
       text: {
-        content: originalMessage.commonAnnotations.description,
+        content,
       },
     };
   }
