@@ -4,7 +4,7 @@ const bodyParser = require('koa-bodyparser');
 
 const axios = require('axios');
 
-const { PORT, QY_WECHAT_BOT_URL } = process.env;
+const { PORT, QY_WECHAT_BOT_URL, FIRING_TEMPLATE = '🔥 __SUMMARY__', RESOVE_TEMPLATE = '😁 __SUMMARY__' } = process.env;
 
 const app = new Koa();
 const router = new Router();
@@ -17,12 +17,10 @@ const postData = async (url, data) => {
 const parseMessage = (target, originalMessage) => {
   if (target === 'wechat') {
     const { status, commonAnnotations } = originalMessage;
-    const content = status === 'firing' ? `🔥🔥🔥\n${ commonAnnotations.description }` : `😁😁😁 ${commonAnnotations.summary} Resolved!`
+    const content = status === 'firing' ? FIRING_TEMPLATE.replace('__SUMMARY__', commonAnnotations.summary) : RESOVE_TEMPLATE.replace('__SUMMARY__', commonAnnotations.summary);
     return {
       msgtype: 'text',
-      text: {
-        content,
-      },
+      text: { content, },
     };
   }
 }
